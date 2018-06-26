@@ -25,7 +25,7 @@ class NavBar extends Component {
     render() {
         return (
             <View>
-                <Text>Navbar</Text>
+                <Text onPress={() => this.props.signOut()}>Sign Out</Text>
             </View>
         )
     }

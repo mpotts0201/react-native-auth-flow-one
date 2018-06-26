@@ -32,6 +32,7 @@ class Login extends Component {
 
 
     render() {
+        const { params } = this.props.navigation.state
         return (
             <View>
 
@@ -64,8 +65,8 @@ class Login extends Component {
                 />
 
 
-                <Button title='Sign In' onPress={this.signIn} />
-                <Button title="Register" onPress={this.signUp} />
+                <Button title='Sign In' onPress={() => params.signIn} />
+                <Button title="Register" onPress={() => params.signUp} />
 
 
 

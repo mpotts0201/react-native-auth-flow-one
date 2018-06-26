@@ -13,32 +13,46 @@ import {
   Button,
   AsyncStorage
 } from 'react-native';
-import { createSwitchNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import Login from './src/components/Login'
 import Home from './src/components/Home'
 import axios from 'axios'
+import CreatureList from './src/components/CreatureList'
+import CreatureShow from './src/components/CreatureShow'
 
 
-export const Navigation = createSwitchNavigator({
+// export const Tabs = createBottomTabNavigator({
+//   Home: Home,
+//   List: SignedIn
+// })
 
-  Login: {
-    screen: Login,
+export const SignedOut = createStackNavigator({ Login: Login })
+
+
+export const SignedIn = createStackNavigator({
+  CreatureList: {
+    screen: CreatureList,
     navigationOptions: {
-      title: 'Login'
-    }
+      title: 'List'
+    },
   },
-  Home: {
-    screen: Home,
+  CreatureShow: {
+    screen: CreatureShow,
     navigationOptions: {
-      title: 'Home',
-    }
+      title: 'Details'
+    },
   },
 },
   {
-    mode: 'modal',
-    initialRouteName: 'Login'
+    initialRouteName: 'CreatureList'
   }
 )
+
+export const Navigation = createSwitchNavigator({
+  SignedIn: SignedIn,
+  SignedOut: SignedOut
+
+})
 
 
 
@@ -52,9 +66,20 @@ class App extends Component {
 
 
   componentDidMount() {
-    this.getToken()
+    // this.getToken()
+    this.checkSignIn()
 
 
+  }
+
+  checkSignIn = async () => {
+    const token = await AsyncStorage.getItem(ACCESS_TOKEN)
+    this.props.navigation.navigate(
+      token
+        ? ('Home', { signOut: this.signOut.bind(this) })
+        : ('Login', { signUp: this.signUp.bind(this), signIn: this.signIn.bind(this) })
+
+    )
 
   }
 
@@ -71,9 +96,7 @@ class App extends Component {
     try {
       let token = await AsyncStorage.getItem(ACCESS_TOKEN)
       console.log("Token is: " + token)
-      if (token !== null) {
-        this.setState({ signedIn: true })
-      }
+
     } catch (error) {
       console.log(error)
     }
@@ -125,33 +148,12 @@ class App extends Component {
 
 
 
-  removeToken = async () => {
-    try {
-      await AsyncStorage.removeItem(ACCESS_TOKEN)
-      this.setState({ signedIn: false })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+
 
   render() {
 
-    if (this.state.signedIn) {
-      return <Home removeToken={this.removeToken} />
-    }
+    return <Navigation />
 
-    else {
-      return (
-        <View>
-          <Text>App.js</Text>
-          <Login
-            signIn={this.signIn}
-            signUp={this.signUp}
-          />
-        </View>
-
-      );
-    }
   }
 }
 

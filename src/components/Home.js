@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native'
-import NavBar, { Navigation } from './NavBar'
+import NavBar from './NavBar'
+import CreatureList from './CreatureList'
+import CreatureShow from './CreatureShow'
+import {createStackNavigator, createSwitchNavigator} from 'react-navigation'
+
+
+
+
 
 
 class Home extends Component {
 
 
-
     render() {
         return (
-            <Navigation />
+            <NavBar signOut={this.props.signOut} />
+
         );
     }
 }
