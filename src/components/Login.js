@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Button, AsyncStorage } from 'react-native'
-import axios from 'axios'
-
-
-const ACCESS_TOKEN = 'access-token'
+import { Text, View, TextInput, Button } from 'react-native'
 
 const styles = {
     input: {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native'
+import NavBar, { Navigation } from './NavBar'
+
 
 class Home extends Component {
 
@@ -7,10 +9,7 @@ class Home extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Home Page</Text>
-                <Text onPress={this.props.removeToken} >Sign Out</Text>
-            </View>
+            <Navigation />
         );
     }
 }

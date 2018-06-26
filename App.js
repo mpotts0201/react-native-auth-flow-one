@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import { createSwitchNavigator } from 'react-navigation'
 import Login from './src/components/Login'
-import Root from './src/components/Root'
 import Home from './src/components/Home'
 import axios from 'axios'
 
